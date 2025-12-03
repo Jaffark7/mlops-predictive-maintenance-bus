@@ -5,6 +5,7 @@ import pandas as pd
 
 # python -m uvicorn app:app --reload
 model = joblib.load("model.joblib")
+
 class Busdata(BaseModel):
     temperature_mean_last_24h: float
     vibration_level : float
@@ -15,10 +16,12 @@ class Busdata(BaseModel):
     battery_voltage : float
 
 app = FastAPI()
+
 @app.get("/")
 def root():
     return {"message" : "Hello Worlds"}
-# ...existing code...
+
+
 @app.post("/predict")
 def predict(data: Busdata):
     data_dict = data.model_dump()
