@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bus-predictor-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bus-predictor
+  template:
+    metadata:
+      labels:
+        app: bus-predictor
+    spec:
+      containers:
+      - name: bus-predictor
+        image: bus-predictor:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
