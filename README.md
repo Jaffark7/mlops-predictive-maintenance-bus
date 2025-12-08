@@ -1,34 +1,38 @@
-# Bus Failure Prediction – End-to-End MLOps System
+APS Failure Prediction – End-to-End MLOps System
 
-This project builds a complete MLOps pipeline for predicting bus component failures.  
-It includes model training, an inference API, Docker packaging, CI testing, and Kubernetes deployment.
+This project builds a complete MLOps pipeline for predicting failures in Scania’s Air Pressure System (APS).
+It covers the entire machine learning lifecycle: model development, serving, testing, containerization, and Kubernetes deployment.
 
----
+Project Overview
 
-##  Project Overview
+The goal of the system is to detect early signs of APS component failure using ~170 anonymized sensor features.
+The project demonstrates a realistic production-style workflow using modern MLOps tools:
 
-This system predicts equipment failures using sensor-like features such as temperature, vibration, mileage, and load.
+Data preprocessing and model training (Scikit-Learn + XGBoost)
 
-The project demonstrates a full production-style workflow:
+Full ML pipeline saved with joblib
 
-- Data generation and ML model training (scikit-learn)
-- Preprocessing + model pipeline saved with joblib
-- FastAPI inference service (`/predict`)
-- Docker containerization
-- GitHub Actions CI (pytest + Docker build)
-- Kubernetes Deployment + Service (Minikube)
+FastAPI inference API (/predict)
 
----
+Automated API testing with pytest
 
-## Model Input Example
+Docker containerization
 
-```json
+Kubernetes Deployment + Service (Minikube)
+
+The purpose of the project is to learn and demonstrate how a real-world machine learning model transitions from development to production, and to help others understand the fundamentals of deploying ML systems.
+
+Model Input Example
+
+Predictions are made by submitting a dictionary of APS feature values:
+
 {
-  "temperature_mean_last_24h": 80,
-  "vibration_level": 3.2,
-  "mileage_km": 250000,
-  "engine_load": 60,
-  "ambient_temp": 12,
-  "coolant_pressure": 1.4,
-  "battery_voltage": 24.5
+  "features": {
+    "aa_000": 0.5,
+    "ab_000": 1.0,
+    "ac_000": 0.3
+  }
 }
+
+
+The model automatically handles missing features through its preprocessing pipeline.
