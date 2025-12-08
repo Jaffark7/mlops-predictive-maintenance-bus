@@ -6,14 +6,14 @@ A complete MLOps pipeline for predicting failures in Scania's Air Pressure Syste
 
 ## Project Overview
 
-This system detects early signs of APS component failure using approximately 170 anonymized sensor features. The project showcases a realistic production-style workflow using modern MLOps tools and best practices.
+This system detects early signs of APS component failure using approximately 170 anonymized sensor features. The project showcases a production-style workflow using MLOps tools and best practices.
 
 ### What This Project Demonstrates
 
 - End-to-end machine learning pipeline implementation
-- Production-ready API development and testing
+- 'Production-ready' API development and testing
 - Containerization and orchestration fundamentals
-- Real-world MLOps workflow from development to deployment
+- MLOps workflow from development to deployment
 
 ---
 
@@ -56,7 +56,7 @@ Predictions are made by submitting a JSON payload with APS feature values:
 
 ### Prerequisites
 
-- Python 3.8+
+- Python
 - Docker
 - Minikube (for local Kubernetes deployment)
 
@@ -179,10 +179,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
----
-## License
-
-[Your License Here]
 
 ---
 
