@@ -1,38 +1,38 @@
+from typing import Dict
 from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 import pandas as pd
+import os
 
-# python -m uvicorn app:app --reload
-model = joblib.load("model.joblib")
+# Model path relative to this file
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model.joblib")
 
-class Busdata(BaseModel):
-    temperature_mean_last_24h: float
-    vibration_level : float
-    mileage_km : float
-    engine_load : float
-    ambient_temp : float
-    coolant_pressure : float
-    battery_voltage : float
+# Load model bundle (pipeline + feature names)
+bundle = joblib.load(MODEL_PATH)
+model = bundle["model"]
+FEATURE_NAMES = bundle["feature_names"]
 
-app = FastAPI()
+app = FastAPI(title="APS Failure Prediction API")
+
+
+class APSData(BaseModel):
+    features: Dict[str, float]
+
 
 @app.get("/")
-def root():
-    return {"message" : "Hello Worlds"}
+def health_check():
+    return {"status": "ok", "detail": "APS failure prediction API is running"}
 
 
 @app.post("/predict")
-def predict(data: Busdata):
-    data_dict = data.model_dump()
-    df = pd.DataFrame([data_dict])
-    prediction = model.predict(df)            
-    probability = model.predict_proba(df)     
-
-    pred_int = int(prediction[0])                                
-    pred_prob = float(probability[0, pred_int])                   
-
-    return {"failure_prediction": pred_int,
-            "failure_probability": pred_prob}
-
-
+def predict(payload: APSData):
+    df = pd.DataFrame([payload.features])
+    df = df.reindex(columns=FEATURE_NAMES)  
+    y_pred = model.predict(df)[0]
+    y_prob = model.predict_proba(df)[0][1]
+    return {
+        "failure_prediction": int(y_pred),
+        "failure_probability": float(y_prob)
+    }
