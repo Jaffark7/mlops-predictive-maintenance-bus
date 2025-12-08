@@ -180,7 +180,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 5. Open a Pull Request
 
 ---
-
 ## License
 
 [Your License Here]
@@ -196,4 +195,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Contact
 
-Your Name - [@yourhandle](https://twitter.com/yourhandle)
+www.linkedin.com/in/jaffarkamil
+
